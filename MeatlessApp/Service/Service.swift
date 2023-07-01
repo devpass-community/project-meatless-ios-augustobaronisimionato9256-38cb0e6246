@@ -13,19 +13,27 @@ struct Service {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let task = session.dataTask(with: request) { (data, response, error) in
-            if let error = error { return }
-
-            guard let data = data else { return }
-
+            if let error = error {
+                print(error)
+                completion(nil)
+                return
+            }
+            
+            guard let data = data else {
+                completion(nil)
+                return
+            }
+            
             do {
                 let decoder = JSONDecoder()
                 let restaurants = try decoder.decode([Restaurant].self, from: data)
-                
+                completion(restaurants)
             } catch {
-                
+                print(error)
+                completion(nil)
             }
         }
-
+        
         task.resume()
     }
 }
