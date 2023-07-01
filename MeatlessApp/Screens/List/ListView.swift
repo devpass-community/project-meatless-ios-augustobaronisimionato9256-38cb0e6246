@@ -87,7 +87,11 @@ extension ListView: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! CellView
 
         // STORY 2: Configure cell with the restaurant information.
-
+        let restaurant = restaurants[indexPath.row]
+        cell.logoImageView.image = UIImage(named: "\(restaurant.image)")
+        cell.restaurantNameLabel.text = restaurant.name
+        cell.restaurantInfoLabel.text = "\(restaurant.distance) km • \(restaurant.status)"
+        
         return cell
     }
 }
